@@ -1,6 +1,7 @@
 {    
     "files.associations": {
-        "allegro.h": "c"
+        "allegro.h": "c",
+        "ALLEGRO.H": "cpp"
     }
     
 }

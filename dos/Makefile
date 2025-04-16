@@ -4,6 +4,8 @@ rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(su
 #detect SO
 ifeq ($(OS),Windows_NT)
 	OS := Windows_NT
+	OS_INC_DIR := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/include'
+	OS_GCC	   := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
 else
 	UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
@@ -11,6 +13,8 @@ else
     endif
     ifeq ($(UNAME_S),Darwin)
         OS := Mac
+		OS_INC_DIR := '~/code/dos/djgpp/include'
+		OS_GCC	   := '~/code/dos/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
     endif
 endif
 
@@ -22,7 +26,7 @@ SRC_DIR				:= ./src/
 BUILD_DIR			:= ./build/
 RESOURCES_DIR		:= ./res/
 STATIC_DIR			:= ./static/
-INCLUDES_DIR		:= 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/include'
+INCLUDES_DIR		:= ${OS_INC_DIR}
 LIBS_DIR			:= ./
 DEBUG_BIN_DIR   	:= ${BUILD_DIR}debug/bin/
 DEBUG_OBJS_DIR  	:= ${BUILD_DIR}debug/obj/
@@ -38,7 +42,7 @@ DEBUG_RESOURCES		:= ${patsubst ${RESOURCES_DIR}%, ${DEBUG_RES_DIR}%,${RESOURCES}
 RELEASE_OBJS 		:= $(patsubst ${SRC_DIR}%.${SRC_EXT}, ${RELEASE_OBJS_DIR}%.o, ${SRCS})
 RELEASE_RESOURCES	:= ${patsubst ${RESOURCES_DIR}%, ${RELEASE_RES_DIR}%,${RESOURCES}}
 #compiler/linker flags
-CC					:= 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/bin/i586-pc-msdosdjgpp-gcc'
+CC					:= ${OS_GCC}
 DEBUG_CFLAGS  		:= -g -fgnu89-inline -I ${INCLUDES_DIR}
 RELEASE_CFLAGS 		:= -Wall -O3 -fgnu89-inline -I ${INCLUDES_DIR}
 LDFLAGS 			:= -fgnu89-inline -lalleg
@@ -78,7 +82,7 @@ ${RELEASE_BIN_DIR}${APP}: ${RELEASE_OBJS}
 	${CC} $^ -o $@ ${RELEASE_CFLAGS} ${LDFLAGS}
 
 	@echo "## Copy static files"
-	cp -r ${STATIC_DIR} ${RELEASE_BIN_DIR}
+	cp -r ${STATIC_DIR}/*.* ${RELEASE_BIN_DIR}
 	
 #compile objects generating dependency files (release)
 ${RELEASE_OBJS_DIR}%.o: ${SRC_DIR}%.${SRC_EXT}
