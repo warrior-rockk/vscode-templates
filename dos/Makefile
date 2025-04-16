@@ -6,6 +6,7 @@ ifeq ($(OS),Windows_NT)
 	OS := Windows_NT
 	OS_INC_DIR := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/include'
 	OS_GCC	   := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
+	OS_LIB     := ./
 else
 	UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
@@ -13,8 +14,9 @@ else
     endif
     ifeq ($(UNAME_S),Darwin)
         OS := Mac
-		OS_INC_DIR := '~/code/dos/djgpp/include'
-		OS_GCC	   := '~/code/dos/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
+		OS_INC_DIR := /Users/warrior/Downloads/allegro-xc/allegro-4.2.2-xc/include
+		OS_GCC	   := /Users/warrior/Downloads/djgpp/bin/i586-pc-msdosdjgpp-gcc	
+		OS_LIB	   := /Users/warrior/Downloads/allegro-xc/allegro-4.2.2-xc/lib/djgpp
     endif
 endif
 
@@ -27,7 +29,7 @@ BUILD_DIR			:= ./build/
 RESOURCES_DIR		:= ./res/
 STATIC_DIR			:= ./static/
 INCLUDES_DIR		:= ${OS_INC_DIR}
-LIBS_DIR			:= ./
+LIBS_DIR			:= ${OS_LIB}
 DEBUG_BIN_DIR   	:= ${BUILD_DIR}debug/bin/
 DEBUG_OBJS_DIR  	:= ${BUILD_DIR}debug/obj/
 DEBUG_RES_DIR		:= ${DEBUG_BIN_DIR}
@@ -45,7 +47,7 @@ RELEASE_RESOURCES	:= ${patsubst ${RESOURCES_DIR}%, ${RELEASE_RES_DIR}%,${RESOURC
 CC					:= ${OS_GCC}
 DEBUG_CFLAGS  		:= -g -fgnu89-inline -I ${INCLUDES_DIR}
 RELEASE_CFLAGS 		:= -Wall -O3 -fgnu89-inline -I ${INCLUDES_DIR}
-LDFLAGS 			:= -fgnu89-inline -lalleg
+LDFLAGS 			:= -fgnu89-inline -L ${LIBS_DIR} -lalleg
 
 #all targets
 all: debug release
