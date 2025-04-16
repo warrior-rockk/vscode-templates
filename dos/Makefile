@@ -6,7 +6,8 @@ ifeq ($(OS),Windows_NT)
 	OS := Windows_NT
 	OS_INC_DIR := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/include'
 	OS_GCC	   := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
-	OS_LIB     := ./
+	OS_LIB_DIR := ./
+	OS_DOSBOX  := DosBox.exe
 else
 	UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
@@ -16,7 +17,8 @@ else
         OS := Mac
 		OS_INC_DIR := /Users/warrior/Downloads/allegro-xc/allegro-4.2.2-xc/include
 		OS_GCC	   := /Users/warrior/Downloads/djgpp/bin/i586-pc-msdosdjgpp-gcc	
-		OS_LIB	   := /Users/warrior/Downloads/allegro-xc/allegro-4.2.2-xc/lib/djgpp
+		OS_LIB_DIR := /Users/warrior/Downloads/allegro-xc/allegro-4.2.2-xc/lib/djgpp
+		OS_DOSBOX  := /Applications/dosbox-x.app/Contents/MacOS/dosbox-x --fastbioslogo
     endif
 endif
 
@@ -29,7 +31,7 @@ BUILD_DIR			:= ./build/
 RESOURCES_DIR		:= ./res/
 STATIC_DIR			:= ./static/
 INCLUDES_DIR		:= ${OS_INC_DIR}
-LIBS_DIR			:= ${OS_LIB}
+LIBS_DIR			:= ${OS_LIB_DIR}
 DEBUG_BIN_DIR   	:= ${BUILD_DIR}debug/bin/
 DEBUG_OBJS_DIR  	:= ${BUILD_DIR}debug/obj/
 DEBUG_RES_DIR		:= ${DEBUG_BIN_DIR}
@@ -102,9 +104,9 @@ ${RELEASE_RES_DIR}%: ${RESOURCES_DIR}%
 
 #run targets
 run_debug: debug
-	cd ${DEBUG_BIN_DIR} && ./DosBox.exe ${APP} -conf dosbox.conf -exit -noconsole
+	cd ${DEBUG_BIN_DIR} && ${OS_DOSBOX} ${APP} -conf dosbox.conf -exit -noconsole
 run_release: release
-	cd ${RELEASE_BIN_DIR} && ./DosBox.exe ${APP} -conf dosbox.conf -exit -noconsole
+	cd ${RELEASE_BIN_DIR} && ${OS_DOSBOX} ${APP} -conf dosbox.conf -exit -noconsole
 
 .PHONY: clean info
 
