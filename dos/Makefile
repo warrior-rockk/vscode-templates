@@ -7,7 +7,7 @@ ifeq ($(OS),Windows_NT)
 	OS_INC_DIR := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/include'
 	OS_GCC	   := 'D:/Instalables/Proyectos/Programacion DOS/cross-compile/djgpp/bin/i586-pc-msdosdjgpp-gcc'	
 	OS_LIB_DIR := ./
-	OS_DOSBOX  := DosBox.exe
+	OS_DOSBOX  := 'D:/Instalables/Proyectos/Old Days/bin/DOSBox/DosBox.exe'
 else
 	UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
