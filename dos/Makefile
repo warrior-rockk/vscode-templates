@@ -34,10 +34,10 @@ INCLUDES_DIR		:= ${OS_INC_DIR}
 LIBS_DIR			:= ${OS_LIB_DIR}
 DEBUG_BIN_DIR   	:= ${BUILD_DIR}debug/bin/
 DEBUG_OBJS_DIR  	:= ${BUILD_DIR}debug/obj/
-DEBUG_RES_DIR		:= ${DEBUG_BIN_DIR}
+DEBUG_RES_DIR		:= ${DEBUG_BIN_DIR}/res/
 RELEASE_BIN_DIR 	:= ${BUILD_DIR}release/bin/
 RELEASE_OBJS_DIR  	:= ${BUILD_DIR}release/obj/
-RELEASE_RES_DIR		:= ${RELEASE_BIN_DIR}
+RELEASE_RES_DIR		:= ${RELEASE_BIN_DIR}/res/
 #objects
 SRCS  				:= $(wildcard ${SRC_DIR}*.${SRC_EXT})
 RESOURCES			:= $(wildcard ${RESOURCES_DIR}*.*)
